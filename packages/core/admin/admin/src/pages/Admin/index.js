@@ -4,18 +4,18 @@
  *
  */
 
-import React, { Suspense, useEffect, useMemo, lazy } from 'react';
-import { Switch, Route } from 'react-router-dom';
 // Components from @strapi/helper-plugin
-import { useTracking, LoadingIndicatorPage, useStrapiApp } from '@strapi/helper-plugin';
+import { LoadingIndicatorPage, useStrapiApp, useTracking } from '@strapi/helper-plugin';
+import React, { lazy, Suspense, useEffect, useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import LeftMenu from '../../components/LeftMenu';
-import AppLayout from '../../layouts/AppLayout';
-import { useMenu, useReleaseNotification } from '../../hooks';
-import Onboarding from './Onboarding';
-import { createRoute } from '../../utils';
+import { Route, Switch } from 'react-router-dom';
 import GuidedTourModal from '../../components/GuidedTour/Modal';
+import LeftMenu from '../../components/LeftMenu';
+import { useMenu, useReleaseNotification } from '../../hooks';
+import AppLayout from '../../layouts/AppLayout';
+import { createRoute } from '../../utils';
+import Onboarding from './Onboarding';
 
 const CM = lazy(() =>
   import(/* webpackChunkName: "content-manager" */ '../../content-manager/pages/App')
@@ -76,9 +76,8 @@ const Admin = () => {
       >
         <Suspense fallback={<LoadingIndicatorPage />}>
           <Switch>
-            <Route path="/" component={HomePage} exact />
+            <Route path="/" component={CM} />
             <Route path="/me" component={ProfilePage} exact />
-            <Route path="/content-manager" component={CM} />
             {routes}
             <Route path="/settings/:settingId" component={SettingsPage} />
             <Route path="/settings" component={SettingsPage} exact />
